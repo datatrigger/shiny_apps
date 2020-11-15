@@ -1,6 +1,9 @@
+# PACKAGES ----
 library(shiny)
 library(tidyverse)
 
+# CUSTOM ----
+# Expected values and standard deviations of studied distributions
 ev <- list()
 variance <- list()
 ev['Uniform'] <- 0.5
@@ -18,6 +21,7 @@ variance['Poisson'] <- 1
 
 distributions <- names(ev)
 
+# Sample generator ----
 means <- function(distribution, size_sample, number_samples){
   if(distribution == 'Uniform'){
     random_generator <- function(x) runif(n = x)
@@ -59,6 +63,7 @@ means <- function(distribution, size_sample, number_samples){
     return()
 }
 
+# UI ----
 ui <- fluidPage(
   titlePanel(
     title = h1("Visualizing the Central Limit Theorem", align = "center"),
@@ -143,6 +148,7 @@ ui <- fluidPage(
   )
 )
 
+# SERVER ----
 server <- function(input, output){
   
   df <- reactive({
@@ -170,4 +176,5 @@ server <- function(input, output){
   })
 }
 
+# APP ----
 shinyApp(ui = ui, server = server)
